@@ -15,5 +15,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "assaydepot"
   gem.require_paths = ["lib"]
-  gem.version       = Assaydepot::VERSION
+  gem.version       = AssayDepot::VERSION
 end
