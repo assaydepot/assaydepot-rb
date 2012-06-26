@@ -24,9 +24,8 @@ AssayDepot.configure do |config|
   config.auth_token = "1234567890"
   config.url = "http://localhost:3000/api"
 end
-client = AssayDepot::Client.new
 wares = AssayDepot::Wares.find_by_ware_type("CustomService")
-wares.count
+wares.total
 ```
 
 ## Chainable Commands
