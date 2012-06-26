@@ -24,6 +24,8 @@ AssayDepot.configure do |config|
   config.auth_token = "1234567890"
   config.url = "http://localhost:3000/api"
 end
+wares = AssayDepot::Wares.find("Antibody")
+wares.first
 ```
 
 ## Using Facets
