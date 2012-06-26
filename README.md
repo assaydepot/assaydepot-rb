@@ -29,6 +29,13 @@ wares = AssayDepot::Wares.find_by_ware_type("CustomService")
 wares.count
 ```
 
+## Chainable Commands
+
+```ruby
+wares = AssayDepot::Wares.find_by_ware_type("CustomService").find_by_available_provider_names("Assay Depot").page(2)
+wares.first["name"]
+```
+
 ## Contributing
 
 1. Fork it

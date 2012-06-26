@@ -57,7 +57,7 @@ module AssayDepot
 
     def page(page)
       result = self.clone
-      result.search_page = search_page
+      result.search_page = page
       result
     end
 
