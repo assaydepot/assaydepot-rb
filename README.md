@@ -16,7 +16,7 @@ Or install it yourself as:
 
     $ gem install assaydepot
 
-## Usage
+## Basic Usage
 
 ```ruby
 require 'assaydepot'
@@ -24,6 +24,11 @@ AssayDepot.configure do |config|
   config.auth_token = "1234567890"
   config.url = "http://localhost:3000/api"
 end
+```
+
+## Using Facets
+
+```ruby
 wares = AssayDepot::Wares.find_by_ware_type("CustomService")
 wares.total
 ```
