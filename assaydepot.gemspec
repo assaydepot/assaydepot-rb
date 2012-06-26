@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["christopher.petersen@gmail.com"]
   gem.description   = %q{TODO: Write a gem description}
   gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/assaydepot/assaydepot-rb"
 
   gem.add_dependency('json')
 
