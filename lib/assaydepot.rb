@@ -1,7 +1,9 @@
 require "assaydepot/version"
 require "assaydepot/configurable"
 require "assaydepot/client"
-require "assaydepot/wares"
+require "assaydepot/model"
+require "assaydepot/ware"
+require "assaydepot/provider"
 
 # Twitter.configure do |config|
 #   config.consumer_key = YOUR_CONSUMER_KEY

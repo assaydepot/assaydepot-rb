@@ -24,22 +24,29 @@ AssayDepot.configure do |config|
   config.auth_token = "1234567890"
   config.url = "http://localhost:3000/api"
 end
-wares = AssayDepot::Wares.find("Antibody")
+wares = AssayDepot::Ware.find("Antibody")
 wares.total
 ```
 
 ## Using Facets
 
 ```ruby
-wares = AssayDepot::Wares.find_by_ware_type("CustomService")
+wares = AssayDepot::Ware.where(:ware_type => "CustomService")
 wares.facets
 ```
 
 ## Chainable Commands
 
 ```ruby
-wares = AssayDepot::Wares.find_by_ware_type("CustomService").find_by_available_provider_names("Assay Depot").page(2)
+wares = AssayDepot::Ware.where(:ware_type => "CustomService").where(:available_provider_names => "Assay Depot").page(2)
 wares.first["name"]
+```
+
+## Providers
+
+```ruby
+providers = AssayDepot::Provider.where(:starts_with => "a").per_page(600)
+providers.count
 ```
 
 ## Contributing
