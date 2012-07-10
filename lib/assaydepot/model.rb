@@ -7,6 +7,9 @@ module AssayDepot
       def where(conditions={})
         self.new.where(conditions)
       end
+      def get(id)
+        Client.new(:search_type => search_type).get(id)
+      end
     end
 
     def self.included(base)
@@ -93,11 +96,11 @@ module AssayDepot
       end
 
       def private_results
-        search_results[ref_name]
+        search_results[self.class.ref_name]
       end
       def search_results
         unless @search_results
-          @search_results = Client.new(:search_type => search_type).search(search_query, search_facets, search_options)
+          @search_results = Client.new(:search_type => self.class.search_type).search(search_query, search_facets, search_options)
         end
         @search_results
       end

@@ -2,10 +2,10 @@ module AssayDepot
   class Provider
     include Model
 
-    def search_type
+    def self.search_type
       "providers"
     end
-    def ref_name
+    def self.ref_name
       "provider_refs"
     end
   end

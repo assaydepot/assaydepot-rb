@@ -2,10 +2,10 @@ module AssayDepot
   class Ware
     include Model
 
-    def search_type
+    def self.search_type
       "wares"
     end
-    def ref_name
+    def self.ref_name
       "ware_refs"
     end
   end

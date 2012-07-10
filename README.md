@@ -49,6 +49,12 @@ providers = AssayDepot::Provider.where(:starts_with => "a").per_page(600)
 providers.count
 ```
 
+## Get Details
+```ruby
+providers = AssayDepot::Provider.where(:starts_with => "a")
+AssayDepot::Provider.get(providers.first["id"])
+```
+
 ## Contributing
 
 1. Fork it
