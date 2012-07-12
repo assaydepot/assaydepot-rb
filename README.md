@@ -26,7 +26,7 @@ Or install it yourself as:
 require 'assaydepot'
 AssayDepot.configure do |config|
   config.auth_token = "1234567890"
-  config.url = "http://localhost:3000/api"
+  config.url = "https://www.assaydepot.com/api"
 end
 wares = AssayDepot::Ware.find("Antibody")
 wares.total
