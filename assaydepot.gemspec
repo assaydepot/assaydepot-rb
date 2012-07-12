@@ -4,8 +4,8 @@ require File.expand_path('../lib/assaydepot/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Christopher Petersen"]
   gem.email         = ["christopher.petersen@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{This is the first version of Assay Depot's Ruby SDK. It provides read access to Services and Vendors through assaydepot.com's JSON API.}
+  gem.summary       = %q{Provides read access to Assay Depot's Services and Vendors.}
   gem.homepage      = "https://github.com/assaydepot/assaydepot-rb"
 
   gem.add_dependency('json')
