@@ -25,7 +25,7 @@ Or install it yourself as:
 ```ruby
 require 'assaydepot'
 AssayDepot.configure do |config|
-  config.auth_token = "1234567890"
+  config.access_token = "1234567890"
   config.url = "https://www.assaydepot.com/api"
 end
 wares = AssayDepot::Ware.find("Antibody")

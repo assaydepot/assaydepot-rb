@@ -16,7 +16,7 @@ module AssayDepot
     end
 
     def search(query, facets, params={})
-      params["auth_token"] = AssayDepot.auth_token
+      params["access_token"] = AssayDepot.access_token
       params["q"] = query
       facets.map do |name,value|
         params["facets[#{name}][]"] = value
@@ -25,7 +25,7 @@ module AssayDepot
     end
 
     def get(id, params={})
-      params["auth_token"] = AssayDepot.auth_token
+      params["access_token"] = AssayDepot.access_token
       JSON.parse(open(get_url(id, params)).read)
     end
   end

@@ -9,7 +9,7 @@ module AssayDepot
 
     CONFIG_KEYS = [
       :url,
-      :auth_token,
+      :access_token,
     ] unless defined? CONFIG_KEYS
     attr_accessor *CONFIG_KEYS
 
