@@ -49,7 +49,7 @@ wares.first["name"]
 ## Providers
 
 ```ruby
-providers = AssayDepot::Provider.where(:starts_with => "a").per_page(600)
+providers = AssayDepot::Provider.where(:starts_with => "a").per_page(50)
 providers.count
 ```
 
