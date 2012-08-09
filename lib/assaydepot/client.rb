@@ -7,7 +7,7 @@ module AssayDepot
       @search_type = options[:search_type] || "wares"
     end
 
-    def search_url(query, facets, params={})
+    def search_url(params={})
       "#{AssayDepot.url}/#{@search_type}.json?#{params.collect { |k,v| "#{k}=#{v.to_s.gsub(" ","+")}"}.join("&")}"
     end
 
@@ -21,7 +21,7 @@ module AssayDepot
       facets.map do |name,value|
         params["facets[#{name}][]"] = value
       end
-      JSON.parse(open(search_url(query, facets, params)).read)
+      JSON.parse(open(search_url(params)).read)
     end
 
     def get(id, params={})
