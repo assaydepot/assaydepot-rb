@@ -1,6 +1,6 @@
 module AssayDepot
   class Ware
-    include Model
+    include ::AssayDepot::Model
 
     def self.search_type
       "wares"
