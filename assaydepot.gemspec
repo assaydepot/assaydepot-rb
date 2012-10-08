@@ -9,11 +9,15 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/assaydepot/assaydepot-rb"
 
   gem.add_dependency('json')
+  gem.add_development_dependency('rake')
+  gem.add_development_dependency('rspec')
+  gem.add_development_dependency('oauth2')
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "assaydepot"
   gem.require_paths = ["lib"]
+  
   gem.version       = AssayDepot::VERSION
 end
