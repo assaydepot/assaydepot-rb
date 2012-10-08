@@ -6,8 +6,8 @@ describe AssayDepot do
 
   context "when accessing the api via oauth2 client credentials" do
     let(:client) { 
-      OAuth2::Client.new( "6hH3KQZz9oqR5lqtckyqfAUcyfNgHQ", 
-                          "FDwDYchR220FSYDPtqS12e-P0pjx-7y_tbba3wyr-3VschLuVgpvOBBL", 
+      OAuth2::Client.new( ENV["ASSAYDEPOT_APP_ID"],
+                          ENV["ASSAYDEPOT_APP_SECRET"],
                           :site => site)
     }
     let(:access_token) { client.client_credentials.get_token(:redirect_uri => 'http://localhost:4567/oauth2/callback') }
