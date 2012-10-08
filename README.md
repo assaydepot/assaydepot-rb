@@ -71,3 +71,4 @@ AssayDepot::Provider.get(providers.first["id"])
 
 The Assay Depot Ruby SDK is released under the MIT license.
 
+
