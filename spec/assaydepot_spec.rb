@@ -126,6 +126,3 @@ describe AssayDepot do
     end
   end
 end
-
-# CPETERSEN AUTH TOKEN "bp925sZx5lQxgbmwKXxb_NpUxZKw3ysWUL8gj3KjJ0v1UY6cLNdEYZ73"
-
