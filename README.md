@@ -1,4 +1,4 @@
-# Assay Depot
+# Assay Depot ![Build Status](https://secure.travis-ci.org/assaydepot/assaydepot-rb.png)
 
 Ruby interface for Assay Depot's online laboratory (http://www.assaydepot.com).
 
@@ -70,5 +70,3 @@ AssayDepot::Provider.get(providers.first["id"])
 ## License
 
 The Assay Depot Ruby SDK is released under the MIT license.
-
-
