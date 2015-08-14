@@ -90,10 +90,10 @@ describe AssayDepot do
     end
 
     context "when searching for wares using a chained query" do
-      let(:wares) { AssayDepot::Ware.where(:ware_type => "CustomService").where(:available_provider_names => "Assay Depot").page(2) }
+      let(:wares) { AssayDepot::Ware.where(:ware_type => "CustomService").where(:available_provider_names => "Blue Sky Biotech") }
 
       it "should return wares" do
-        wares.total.should > 1
+        wares.total.should > 0
       end
 
       it "the ware's name should be available" do
