@@ -79,7 +79,7 @@ module AssayDepot
 
       def find(query)
         result = self.clone
-        result.search_query = search_query
+        result.search_query = query
         result
       end
 
