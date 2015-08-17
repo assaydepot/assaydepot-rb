@@ -2,16 +2,13 @@ require 'oauth2'
 require 'assaydepot'
 
 describe AssayDepot do
-  let(:site) { "https://staging.assaydepot.com" }
-
   context "when accessing the api via oauth2 client credentials" do
-    let(:client) { 
-      OAuth2::Client.new( ENV["ASSAYDEPOT_APP_ID"],
-                          ENV["ASSAYDEPOT_APP_SECRET"],
-                          :site => site)
-    }
-    let(:access_token) { client.client_credentials.get_token(:redirect_uri => 'http://localhost:4567/oauth2/callback') }
     before(:all) do
+      site = "https://staging.assaydepot.com"
+      client = OAuth2::Client.new( ENV["ASSAYDEPOT_APP_ID"],
+                                   ENV["ASSAYDEPOT_APP_SECRET"],
+                                   site: site)
+      access_token = client.client_credentials.get_token(:redirect_uri => 'http://localhost:4567/oauth2/callback')
       AssayDepot.configure do |config|
         config.access_token = access_token.token
         config.url = "#{site}/api"
