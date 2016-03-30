@@ -1,5 +1,6 @@
-before_script:
-  - export ASSAYDEPOT_APP_ID=6hH3KQZz9oqR5lqtckyqfAUcyfNgHQ
-  - export ASSAYDEPOT_APP_SECRET=FDwDYchR220FSYDPtqS12e-P0pjx-7y_tbba3wyr-3VschLuVgpvOBBL
+rvm:
+  - 2.0.0
+  - 2.1.0
+  - 2.3.0
 script:
   - bundle exec rake spec
