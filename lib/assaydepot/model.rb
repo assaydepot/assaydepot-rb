@@ -1,3 +1,4 @@
+require 'forwardable'
 module AssayDepot
   module Model
     module ClassMethods
@@ -15,24 +16,24 @@ module AssayDepot
     def self.included(base)
       base.extend ClassMethods
       base.extend Forwardable
-      base.def_delegators  :private_results, 
-                      :each, 
-                      :[], 
-                      :count, 
-                      :collect, 
+      base.def_delegators  :private_results,
+                      :each,
+                      :[],
+                      :count,
+                      :collect,
                       :map,
-                      :tap, 
-                      :<=>, 
-                      :compact, 
-                      :each_index, 
-                      :each_with_index, 
-                      :empty?, 
-                      :flatten, 
-                      :include?, 
-                      :index, 
-                      :length, 
-                      :first, 
-                      :last, 
+                      :tap,
+                      :<=>,
+                      :compact,
+                      :each_index,
+                      :each_with_index,
+                      :empty?,
+                      :flatten,
+                      :include?,
+                      :index,
+                      :length,
+                      :first,
+                      :last,
                       :keep_if,
                       :reject,
                       :reverse
@@ -47,7 +48,7 @@ module AssayDepot
         @search_options = options[:search_options] || {:page => 1}
       end
 
-      def initialize_copy(source)  
+      def initialize_copy(source)
         super
         @search_query = @search_query.dup
         @search_facets = @search_facets.dup
