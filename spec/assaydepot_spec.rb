@@ -1,17 +1,12 @@
-require 'oauth2'
 require 'assaydepot'
 
 describe AssayDepot do
   context "when accessing the api via oauth2 client credentials" do
     before(:all) do
-      site = "https://staging.assaydepot.com"
-      client = OAuth2::Client.new( ENV["ASSAYDEPOT_APP_ID"],
-                                   ENV["ASSAYDEPOT_APP_SECRET"],
-                                   site: site)
-      access_token = client.client_credentials.get_token(:redirect_uri => 'http://localhost:4567/oauth2/callback')
+      site = "http://dev.scientist.com:3000"
       AssayDepot.configure do |config|
-        config.access_token = access_token.token
-        config.url = "#{site}/api"
+        config.access_token = AssayDepot::TokenAuth.get_token("QnUOe2yvmQACtvxtC_ksGBVCEV-ZQw", "2BoA_dxC0BCM0YsRxWyLK4Acknv4mEM2oJ9aiC1GNRvPlWTiVdN6IWOe", site)
+        config.url = "#{site}/api/v2"
       end
     end
 
@@ -41,6 +36,7 @@ describe AssayDepot do
 
     context "when searching for wares of type CustomService" do
       let(:wares) { AssayDepot::Ware.where(:ware_type => "CustomService") }
+
       it "should return facets" do
         wares.facets.should_not be_empty
       end
@@ -53,8 +49,9 @@ describe AssayDepot do
         wares.facets.should include("ware_type")
       end
 
-      it "should include the available_provider_names facet" do
-        wares.facets.should include("available_provider_names")
+      # RR: replaced "available_provider_names"
+      it "should include the technology facet" do
+        wares.facets.should include("technology")
       end
 
       it "should include the certifications facet" do
@@ -87,7 +84,7 @@ describe AssayDepot do
     end
 
     context "when searching for wares using a chained query" do
-      let(:wares) { AssayDepot::Ware.where(:ware_type => "CustomService").where(:available_provider_names => "Blue Sky Biotech") }
+      let(:wares) { AssayDepot::Ware.where(:ware_type => "CustomService").where(:source => "central") }
 
       it "should return wares" do
         wares.total.should > 0
@@ -100,7 +97,7 @@ describe AssayDepot do
 
     context "and searching for providers that start with the letter a" do
       let(:providers) { AssayDepot::Provider.where(:starts_with => "a").per_page(50) }
- 
+
       it "should return a Provider object" do
         providers.class.should == AssayDepot::Provider
       end
