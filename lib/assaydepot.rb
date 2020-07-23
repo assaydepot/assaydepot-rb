@@ -1,4 +1,3 @@
-puts "yes!"
 require "assaydepot/version"
 require "assaydepot/configurable"
 require "assaydepot/client"
