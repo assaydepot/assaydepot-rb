@@ -11,8 +11,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency('json')
   gem.add_dependency('uri-query_params')
 
-  gem 'uri-query_params'
-
   gem.add_development_dependency('rake')
   gem.add_development_dependency('rspec')
   gem.add_development_dependency('oauth2')
