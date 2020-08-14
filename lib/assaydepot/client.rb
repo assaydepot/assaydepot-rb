@@ -14,6 +14,7 @@ module AssayDepot
       uri = URI( "#{url}" )
       uri.query = URI.encode_www_form( params ) unless params.keys.length == 0
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
       request.basic_auth auth[:username], auth[:password] unless auth[:username].nil?
       res = http.request(request)
@@ -23,6 +24,7 @@ module AssayDepot
     def get(params={})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
@@ -32,6 +34,7 @@ module AssayDepot
     def put(body={}, params={})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Put.new(uri.request_uri)
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       request["Content-Type"] = "application/json"
@@ -45,6 +48,7 @@ module AssayDepot
     def post(body={}, params={})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Post.new(uri.request_uri)
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       request["Accept"] = "application/json"
@@ -59,6 +63,7 @@ module AssayDepot
     def delete(params={})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Delete.new(uri.request_uri)
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
