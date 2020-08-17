@@ -5,10 +5,9 @@ Dotenv.load
 describe AssayDepot do
   context "scientist_api tests" do
     before(:all) do
-      site = "http://dev.scientist.com:3000"
       AssayDepot.configure do |config|
         config.access_token = ENV['ACCESS_TOKEN']
-        config.url = "#{site}/api/v2"
+        config.url = "#{ENV['SITE']}/api/v2"
       end
     end
 
@@ -98,14 +97,6 @@ describe AssayDepot do
           }
         })
         response["code"].should == "unprocessable_entity"
-      end
-    end
-
-    context "quoted wares" do
-      let(:qw) { AssayDepot::QuotedWare.get() }
-
-      it "get all quoted wares" do
-        qw.is_a?(Array).should == true
       end
     end
 
@@ -225,6 +216,17 @@ describe AssayDepot do
         response["status"].should == "ok"
         response = AssayDepot::Webhook.get();
         response["code"].should == "not_found"
+      end
+    end
+
+    context "backoffice" do
+      AssayDepot.url =
+      context "quoted wares" do
+        let(:qw) { AssayDepot::QuotedWare.get() }
+
+        it "get all quoted wares" do
+          qw.is_a?(Array).should == true
+        end
       end
     end
   end

@@ -5,10 +5,9 @@ Dotenv.load
 describe AssayDepot do
   context "when accessing the api via token client credentials" do
     before(:all) do
-      site = "http://dev.scientist.com:3000"
       AssayDepot.configure do |config|
         config.access_token = ENV['ACCESS_TOKEN']
-        config.url = "#{site}/api/v2"
+        config.url = "#{ENV['SITE']}/api/v2"
       end
     end
 
@@ -117,7 +116,7 @@ describe AssayDepot do
         end
 
         it "should have a description" do
-          provider_result["provider"]["description"].should_not be_nil
+          provider_result["provider"]["keywords"].should_not be_nil
         end
       end
     end
