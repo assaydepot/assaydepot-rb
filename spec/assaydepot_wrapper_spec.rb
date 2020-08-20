@@ -188,6 +188,14 @@ describe AssayDepot do
       end
     end
 
+    context "quoted wares" do
+      let(:qw) { AssayDepot::QuotedWare.get() }
+
+      it "deny quoted wares" do
+        qw.is_a?(Array).should == false
+      end
+    end
+
     context "webhooks" do
       it "create a web hook for this user" do
         response = AssayDepot::Webhook.put({
@@ -216,17 +224,6 @@ describe AssayDepot do
         response["status"].should == "ok"
         response = AssayDepot::Webhook.get();
         response["code"].should == "not_found"
-      end
-    end
-
-    context "backoffice" do
-      AssayDepot.url =
-      context "quoted wares" do
-        let(:qw) { AssayDepot::QuotedWare.get() }
-
-        it "get all quoted wares" do
-          qw.is_a?(Array).should == true
-        end
       end
     end
   end
