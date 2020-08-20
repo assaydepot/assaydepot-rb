@@ -2,9 +2,9 @@
 
 Ruby interface for Assay Depot's online laboratory (http://www.assaydepot.com).
 
-## Assay Depot Developer Program
+## Scientist.com Developer Program
 
-An authentication token is required for the API to function. If you would like access to the API, please email cpetersen@assaydepot.com.
+An authentication token is required for the API to function. If you would like access to the API, please email support@scientist.com.
 
 ## Installation
 
@@ -22,15 +22,31 @@ Or install it yourself as:
 
 ## Basic Usage
 
+### Storefront
+
 ```ruby
 require 'assaydepot'
 AssayDepot.configure do |config|
   config.access_token = "1234567890"
-  config.url = "https://www.assaydepot.com/api"
+  config.url = "https://app,scientist.com"
 end
 wares = AssayDepot::Ware.find("Antibody")
 wares.total
 ```
+
+### Backoffice
+
+```ruby
+require 'assaydepot'
+AssayDepot.configure do |config|
+  config.access_token = "1234567890"
+  config.url = "https://backoffice,scientist.com"
+end
+quoted_ware = AssayDepot::QuotedWare.get()
+```
+
+## API Documentation
+See the [Scientist.com API documentation](https://assaydepot.github.io/scientist_api_docs/#introduction) for details on the Scientist.com API resources and code examples using this SDK.
 
 ## Using Facets
 
@@ -69,4 +85,4 @@ AssayDepot::Provider.get(providers.first["id"])
 
 ## License
 
-The Assay Depot Ruby SDK is released under the MIT license.
+The Scientist.com Ruby SDK is released under the MIT license.
