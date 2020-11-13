@@ -1,8 +1,8 @@
 module AssayDepot
   class Ware
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.search_type
+    def self.model_type
       "wares"
     end
     def self.ref_name

@@ -1,15 +1,17 @@
 require 'forwardable'
 module AssayDepot
-  module Model
+  module SearchModel
     module ClassMethods
       def find(query)
         self.new.find(query)
       end
+  
       def where(conditions={})
         self.new.where(conditions)
       end
+  
       def get(id)
-        Client.new(:search_type => search_type).get(id)
+        Client.new(:model_type => model_type).get(id)
       end
     end
 
@@ -57,15 +59,19 @@ module AssayDepot
       def query_time
         search_results["query_time"]
       end
+  
       def total
         search_results["total"]
       end
+  
       def page
         search_results["page"]
       end
+  
       def per_page
         search_results["per_page"]
       end
+  
       def facets
         search_results["facets"]
       end
@@ -99,9 +105,10 @@ module AssayDepot
       def private_results
         search_results[self.class.ref_name]
       end
+  
       def search_results
         unless @search_results
-          @search_results = Client.new(:search_type => self.class.search_type).search(search_query, search_facets, search_options)
+          @search_results = Client.new(:model_type => self.class.model_type).search(search_query, search_facets, search_options)
         end
         @search_results
       end
