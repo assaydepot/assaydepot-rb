@@ -2,22 +2,23 @@ require 'forwardable'
 module AssayDepot
   module SimpleModel
     module ClassMethods
-      def all
-        self.new
+      def all(options={})
+        self.new(options)
       end
 
-      def get(id)
-        client.get(id)
+      def get(id, params={})
+        client.get(id, params)
       end
 
       def client
-        Client.new(:model_type => model_type)
+        Client.new(model_type: model_type)
       end
     end
 
     def self.included(base)
       base.extend ClassMethods
       base.extend Forwardable
+      base.attr_accessor :params
       base.def_delegators  :private_results,
                       :each,
                       :[],
@@ -41,6 +42,7 @@ module AssayDepot
                       :reverse
 
       def initialize(options={})
+        self.params = options
       end
 
       def initialize_copy(source)
@@ -61,7 +63,7 @@ module AssayDepot
 
       def index_results
         unless @index_results
-          @index_results = self.class.client.index
+          @index_results = self.class.client.index(params)
         end
         @index_results
       end

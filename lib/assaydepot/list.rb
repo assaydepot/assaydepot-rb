@@ -2,8 +2,6 @@ module AssayDepot
   class List
     include ::AssayDepot::SimpleModel
 
-    # curl --header "Authorization: Bearer $TOKEN" --header "Content-Type: application/json" -X POST --data '{"items": [{"value":"a", "human_readable_value": "A"}, {"value":"b", "human_readable_value": "B"}, {"value":"c", "human_readable_value": "C"}]}' $BASE_URL/api/v2/dynamic_lists/xyz4/items.json
-
     def self.items(id)
       ::AssayDepot::ListItem.new(id)
     end

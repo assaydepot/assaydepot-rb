@@ -10,11 +10,15 @@ module AssayDepot
     end
 
     def search_url(params={})
-      "#{AssayDepot.url}/#{@nested_model_type}/#{@nested_model_id}/#{@model_type}.json"
+      format = params.delete(:format)
+      format ||= "json"
+      "#{AssayDepot.url}/#{@nested_model_type}/#{@nested_model_id}/#{@model_type}.#{format}"
     end
 
     def get_url(id, params={})
-      "#{AssayDepot.url}/#{@nested_model_type}/#{@nested_model_id}/#{@model_type}/#{id}.json"
+      format = params.delete(:format)
+      format ||= "json"
+      "#{AssayDepot.url}/#{@nested_model_type}/#{@nested_model_id}/#{@model_type}/#{id}.#{format}"
     end
   end
 end

@@ -1,3 +1,5 @@
+require "uri"
+require "rack"
 require "open-uri"
 require "json"
 require 'net/http'
@@ -9,16 +11,22 @@ module AssayDepot
     end
 
     def search_url(params={})
-      "#{AssayDepot.url}/#{@model_type}.json"
+      format = params.delete(:format)
+      format ||= "json"
+      query_string = Rack::Utils.build_nested_query(params)
+      ["#{AssayDepot.url}/#{@model_type}.#{format}", query_string].compact.join("?")
     end
 
     def get_url(id, params={})
-      "#{AssayDepot.url}/#{@model_type}/#{id}.json"
+      format = params.delete(:format)
+      format ||= "json"
+      query_string = Rack::Utils.build_nested_query(params)
+      ["#{AssayDepot.url}/#{@model_type}/#{id}.#{format}", query_string].compact.join("?")
     end
 
     def index(params={})
       params["access_token"] = AssayDepot.access_token
-      execute_get(search_url, params)
+      execute_get(search_url(params))
     end
 
     def search(query, facets, params={})
@@ -27,16 +35,24 @@ module AssayDepot
       facets.map do |name,value|
         params["facets[#{name}][]"] = value
       end
-      execute_get(search_url, params)
+      execute_get(search_url(params))
     end
 
     def get(id, params={})
       params["access_token"] = AssayDepot.access_token
-      execute_get(get_url(id), params)
+      if params[:format] == "pdf"
+        execute_get_raw(get_url(id, params))
+      else
+        execute_get(get_url(id, params))
+      end
     end
 
-    def execute_get(url, params)
-      JSON.parse(open("#{url}?#{params.collect { |k,v| "#{k}=#{v.to_s.gsub(" ","+")}"}.join("&")}").read)
+    def execute_get(url)
+      JSON.parse(execute_get_raw(url))
+    end
+
+    def execute_get_raw(url)
+      URI.open(url).read
     end
 
     def execute_post(url, payload)
