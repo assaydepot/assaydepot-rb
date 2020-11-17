@@ -5,10 +5,9 @@ Dotenv.load
 describe AssayDepot do
   context "scientist_api tests" do
     before(:all) do
-      site = "http://dev.scientist.com:3000"
       AssayDepot.configure do |config|
         config.access_token = ENV['ACCESS_TOKEN']
-        config.url = "#{site}/api/v2"
+        config.url = "#{ENV['SITE']}/api/v2"
       end
     end
 
@@ -101,14 +100,6 @@ describe AssayDepot do
       end
     end
 
-    context "quoted wares" do
-      let(:qw) { AssayDepot::QuotedWare.get() }
-
-      it "get all quoted wares" do
-        qw.is_a?(Array).should == true
-      end
-    end
-
     context "users" do
       let(:users) { AssayDepot::User.get() }
       let(:profile) { AssayDepot::User.get('profile') }
@@ -194,6 +185,14 @@ describe AssayDepot do
         @ware_clean_up[AssayDepot::ProviderWare.ref_name].select { |el|
           el["name"] == @provider_name
         }.length.should == 0
+      end
+    end
+
+    context "quoted wares" do
+      let(:qw) { AssayDepot::QuotedWare.get() }
+
+      it "deny quoted wares" do
+        qw.is_a?(Array).should == false
       end
     end
 

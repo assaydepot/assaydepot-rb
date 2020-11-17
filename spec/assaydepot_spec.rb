@@ -5,13 +5,12 @@ Dotenv.load
 describe AssayDepot do
   context "when accessing the api via token client credentials" do
     before(:all) do
-      site = "http://dev.scientist.com:3000"
       AssayDepot.configure do |config|
         config.access_token = ENV['ACCESS_TOKEN']
-        config.url = "#{site}/api/v2"
+        config.url = "#{ENV['SITE']}/api/v2"
       end
     end
-
+    
     context "and searching for wares matching \"antibody\"" do
       let(:wares) { AssayDepot::Ware.find("antibody") }
 
@@ -112,12 +111,12 @@ describe AssayDepot do
       context "and getting the details for the first provider" do
         let(:provider_result) { AssayDepot::Provider.get(providers.first["id"]) }
 
-        it "should have a provider" do
+        it "have a provider" do
           provider_result["provider"].should_not be_nil
         end
 
-        it "should have a description" do
-          provider_result["provider"]["description"].should_not be_nil
+        it "have keywords" do
+          expect(provider_result['provider']).to have_key('keywords')
         end
       end
     end
