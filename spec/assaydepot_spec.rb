@@ -10,7 +10,7 @@ describe AssayDepot do
         config.url = "#{ENV['SITE']}/api/v2"
       end
     end
-=begin
+    
     context "and searching for wares matching \"antibody\"" do
       let(:wares) { AssayDepot::Ware.find("antibody") }
 
@@ -95,7 +95,7 @@ describe AssayDepot do
         wares.first["name"].should_not be_nil
       end
     end
-=end
+
     context "and searching for providers that start with the letter a" do
       let(:starts_with) {AssayDepot::Provider.get()["facets"]["starts_with"]["buckets"].first}
       let(:providers) { AssayDepot::Provider.where(:starts_with => starts_with["key"]).per_page(50) }
@@ -111,11 +111,11 @@ describe AssayDepot do
       context "and getting the details for the first provider" do
         let(:provider_result) { AssayDepot::Provider.get(providers.first["id"]) }
 
-        it "should have a provider" do
+        it "have a provider" do
           provider_result["provider"].should_not be_nil
         end
 
-        it "should have a description" do
+        it "have keywords" do
           expect(provider_result['provider']).to have_key('keywords')
         end
       end
