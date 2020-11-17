@@ -28,7 +28,7 @@ Or install it yourself as:
 require 'assaydepot'
 AssayDepot.configure do |config|
   config.access_token = "1234567890"
-  config.url = "https://app,scientist.com"
+  config.url = "https://app.scientist.com"
 end
 wares = AssayDepot::Ware.find("Antibody")
 wares.total
@@ -40,7 +40,7 @@ wares.total
 require 'assaydepot'
 AssayDepot.configure do |config|
   config.access_token = "1234567890"
-  config.url = "https://backoffice,scientist.com"
+  config.url = "https://backoffice.scientist.com"
 end
 quoted_ware = AssayDepot::QuotedWare.get()
 ```

@@ -2,7 +2,6 @@ require 'assaydepot'
 require 'dotenv'
 Dotenv.load
 
-puts "Yes!"
 describe AssayDepot do
   context "scientist_api backoffice tests" do
     before(:all) do
