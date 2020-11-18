@@ -1,7 +1,7 @@
 require "open-uri"
 require "json"
-require 'uri/query_params'
 require 'net/http'
+require 'rack'
 
 module AssayDepot
   class Client
@@ -12,7 +12,7 @@ module AssayDepot
 
     def request(url, params={}, headers={}, auth={})
       uri = URI( "#{url}" )
-      uri.query = URI.encode_www_form( params ) unless params.keys.length == 0
+      uri.query = Rack::Utils.build_nested_query(params) unless params.keys.length == 0
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
@@ -26,6 +26,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
+      puts "CLIENT.GET [#{uri.host}] [#{uri.port}] [#{uri.request_uri}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
       JSON.parse(res.body)
@@ -72,7 +73,7 @@ module AssayDepot
 
     def search(query, facets, params={})
       params["q"] = query if query != ""
-      facets.map do |name,value|
+      facets&.map do |name,value|
         params["facets[#{name}][]"] = value
       end
       get(params)
@@ -82,7 +83,7 @@ module AssayDepot
 
     def get_uri( params )
       uri = URI( "#{AssayDepot.url}/#{@endpoint}" )
-      uri.query = URI.encode_www_form( params ) unless params.keys.length == 0
+      uri.query = Rack::Utils.build_nested_query(params) unless params.keys.length == 0
       uri
     end
   end

@@ -1,6 +1,6 @@
-# Assay Depot ![Build Status](https://secure.travis-ci.org/assaydepot/assaydepot-rb.png) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/assaydepot/assaydepot-rb)
+# Scientist.com
 
-Ruby interface for Assay Depot's online laboratory (http://www.assaydepot.com).
+Ruby interface for Scientist.com's (formerly Assay Depot's) research services marketplace (http://www.scientist.com).
 
 ## Scientist.com Developer Program
 

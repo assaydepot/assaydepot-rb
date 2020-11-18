@@ -2,14 +2,14 @@
 require File.expand_path('../lib/assaydepot/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Christopher Petersen"]
-  gem.email         = ["christopher.petersen@gmail.com"]
-  gem.description   = %q{This is the first version of Assay Depot's Ruby SDK. It provides read access to Services and Vendors through assaydepot.com's JSON API.}
+  gem.authors       = ["Christopher Petersen", "Ron Ranauro"]
+  gem.email         = ["chris@scientist.com", "ron@scientist.com"]
+  gem.description   = %q{The Scientist Ruby SDK. It provides read access to Services and Suppliers through scientist.com's JSON API.}
   gem.summary       = %q{Provides read access to Assay Depot's Services and Vendors.}
   gem.homepage      = "https://github.com/assaydepot/assaydepot-rb"
 
   gem.add_dependency('json')
-  gem.add_dependency('uri-query_params')
+  gem.add_dependency('rack')
 
   gem.add_development_dependency('rake')
   gem.add_development_dependency('rspec')
