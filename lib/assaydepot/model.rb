@@ -95,32 +95,32 @@ module AssayDepot
 
       # HTTP request verbs
       # optional "id" followed by optional hash
-      def get(*id, **params, format)
+      def get(*id, **params)
         puts "PUT id #{id}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).get(params)
+        Client.new(endpoint: endpoint(id)).get(params)
       end
 
-      def put(*id, **params, format)
+      def put(*id, **params)
         id, body, params = get_variable_args(id, params)
         puts "PUT id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).put( body, params )
+        Client.new(endpoint: endpoint(id)).put( body, params )
       end
 
-      def patch(*id, **params, format)
+      def patch(*id, **params)
         id, body, params = get_variable_args(id, params)
         puts "PATCH id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).put( body, params )
+        Client.new(endpoint: endpoint(id)).put( body, params )
       end
 
-      def post(*id, **params, format)
+      def post(*id, **params)
         id, body, params = get_variable_args(id, params)
         puts "POST id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).post( body, params )
+        Client.new(endpoint: endpoint(id)).post( body, params )
       end
 
-      def delete(*id, **params, format)
+      def delete(*id, **params)
         puts "DELETE id #{id}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).delete(params)
+        Client.new(endpoint: endpoint(id)).delete(params)
       end
 
       def get_variable_args(id, params)
