@@ -101,14 +101,11 @@ module AssayDepot
       end
 
       def put(id: nil, body: nil, params: {})
-      # def put(*id, **params)
-      #   id, body, params = get_variable_args(id, params)
         puts "PUT id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).put( body, params )
       end
 
       def patch(id: nil, body: nil, params: {})
-        # id, body, params = get_variable_args(id, params)
         puts "PATCH id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).put( body, params )
       end
@@ -121,28 +118,6 @@ module AssayDepot
       def delete(id: nil, body: nil, params: {})
         puts "DELETE id #{id}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).delete(params)
-      end
-
-      def get_variable_args(id, params)
-        if (id && id.length > 1 && (id[1].is_a?(Integer) || id[1].is_a?(String)))
-          body = params
-          params = {}
-        elsif (id && id.length > 1)
-          body = id[1]
-          id = id[0]
-        elsif (id && id[0].is_a?(Hash))
-          body = id.last
-          id = nil
-        elsif (id && id.length == 1 && id[0].is_a?(Hash) == false)
-          body = params
-          id = id[0]
-          params = {}
-        else
-          body = params
-          params = {}
-          id = nil
-        end
-        [id, body, params]
       end
     end
 
