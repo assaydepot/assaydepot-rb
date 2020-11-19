@@ -95,29 +95,29 @@ module AssayDepot
 
       # HTTP request verbs
       # optional "id" followed by optional hash
-      def get(id: nil, params: {})
+      def get(id: nil, params: {}, format: "json")
         puts "GET id #{id}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id)).get(params)
+        Client.new(endpoint: endpoint(id, format)).get(params)
       end
 
-      def put(id: nil, body: nil, params: {})
+      def put(id: nil, body: nil, params: {}, format: "json")
         puts "PUT id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id)).put( body, params )
+        Client.new(endpoint: endpoint(id, format)).put( body, params )
       end
 
-      def patch(id: nil, body: nil, params: {})
+      def patch(id: nil, body: nil, params: {}, format: "json")
         puts "PATCH id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id)).put( body, params )
+        Client.new(endpoint: endpoint(id, format)).put( body, params )
       end
 
-      def post(id: nil, body: nil, params: {})
+      def post(id: nil, body: nil, params: {}, format: "json")
         puts "POST id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id)).post( body, params )
+        Client.new(endpoint: endpoint(id, format)).post( body, params )
       end
 
-      def delete(id: nil, body: nil, params: {})
+      def delete(id: nil, body: nil, params: {}, format: "json")
         puts "DELETE id #{id}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id)).delete(params)
+        Client.new(endpoint: endpoint(id, format)).delete(params)
       end
     end
 
