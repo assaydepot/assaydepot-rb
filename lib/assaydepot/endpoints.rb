@@ -39,6 +39,10 @@ module AssayDepot
   class QuoteGroup
     include ::AssayDepot::SearchModel
 
+    def self.mine
+      get(id: "mine")
+    end
+
     def self.endpoint(id=nil, format="json")
       get_endpoint(id, "quote_groups", format)
     end
@@ -102,6 +106,10 @@ module AssayDepot
 
   class User
     include ::AssayDepot::SearchModel
+
+    def self.profile
+      get(id: "profile")
+    end
 
     def self.endpoint(id=nil, format="json")
       get_endpoint(id == nil || id[0] == nil ? nil : 'profile', "users", format)

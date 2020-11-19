@@ -88,37 +88,37 @@ module AssayDepot
         response[AssayDepot::TokenAuth.ref_name]
       end
 
-      def get_endpoint( id, endpoint, format = "json")
+      def get_endpoint(id, endpoint, format = "json")
         id = id[0] if id && id.kind_of?(Array)
         id ? "#{endpoint}/#{id}.#{format}" : "#{endpoint}.#{format}"
       end
 
       # HTTP request verbs
       # optional "id" followed by optional hash
-      def get(*id, **params)
-        puts "PUT id #{id}, params #{params}" if ENV["DEBUG"] == "true"
+      def get(id: nil, params: {})
+        puts "GET id #{id}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).get(params)
       end
 
-      def put(*id, **params)
-        id, body, params = get_variable_args(id, params)
+      def put(id: nil, body: nil, params: {})
+      # def put(*id, **params)
+      #   id, body, params = get_variable_args(id, params)
         puts "PUT id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).put( body, params )
       end
 
-      def patch(*id, **params)
-        id, body, params = get_variable_args(id, params)
+      def patch(id: nil, body: nil, params: {})
+        # id, body, params = get_variable_args(id, params)
         puts "PATCH id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).put( body, params )
       end
 
-      def post(*id, **params)
-        id, body, params = get_variable_args(id, params)
+      def post(id: nil, body: nil, params: {})
         puts "POST id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).post( body, params )
       end
 
-      def delete(*id, **params)
+      def delete(id: nil, body: nil, params: {})
         puts "DELETE id #{id}, params #{params}" if ENV["DEBUG"] == "true"
         Client.new(endpoint: endpoint(id)).delete(params)
       end

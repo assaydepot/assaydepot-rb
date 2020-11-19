@@ -10,7 +10,7 @@ describe AssayDepot do
         config.url = "#{ENV['SITE']}/api/v2"
       end
     end
-    
+
     context "and searching for wares matching \"antibody\"" do
       let(:wares) { AssayDepot::Ware.find("antibody") }
 
@@ -23,7 +23,7 @@ describe AssayDepot do
       end
 
       context "and getting the details for the first ware" do
-        let(:ware_result) { AssayDepot::Ware.get(wares.first["id"]) }
+        let(:ware_result) { AssayDepot::Ware.get(id: wares.first["id"]) }
 
         it "should have a ware" do
           ware_result["ware"].should_not be_nil
@@ -109,7 +109,7 @@ describe AssayDepot do
       end
 
       context "and getting the details for the first provider" do
-        let(:provider_result) { AssayDepot::Provider.get(providers.first["id"]) }
+        let(:provider_result) { AssayDepot::Provider.get(id: providers.first["id"]) }
 
         it "have a provider" do
           provider_result["provider"].should_not be_nil

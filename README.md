@@ -72,7 +72,7 @@ providers.count
 ## Get Details
 ```ruby
 providers = AssayDepot::Provider.where(:starts_with => "a")
-AssayDepot::Provider.get(providers.first["id"])
+AssayDepot::Provider.get(id: providers.first["id"])
 ```
 
 ## Contributing

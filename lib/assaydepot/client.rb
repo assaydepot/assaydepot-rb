@@ -26,7 +26,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
-      puts "CLIENT.GET [#{uri.host}] [#{uri.port}] [#{uri.request_uri}]" if ENV["DEBUG"] == "true"
+      puts "CLIENT.GET HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
       JSON.parse(res.body)
@@ -37,6 +37,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Put.new(uri.request_uri)
+      puts "CLIENT.PUT HOST [#{uri.host}] URI [#{uri.request_uri}] BODY [#{body.inspect}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       request["Content-Type"] = "application/json"
       if (body.keys.length > 0)
@@ -51,10 +52,11 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Post.new(uri.request_uri)
+      puts "CLIENT.POST HOST [#{uri.host}] URI [#{uri.request_uri}] BODY [#{body.inspect}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       request["Accept"] = "application/json"
       request["Content-Type"] = "application/json"
-      if (body.keys.length > 0)
+      if (body && body.keys.length > 0)
         request.body = body.to_json
       end
       res = http.request(request)
@@ -66,6 +68,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Delete.new(uri.request_uri)
+      puts "CLIENT.DELETE HOST [#{uri.host}] URI [#{uri.request_uri}]}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
       JSON.parse(res.body)
