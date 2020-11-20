@@ -22,7 +22,7 @@ module AssayDepot
     # Overridden from Model
     def internal_results
       unless @internal_results
-        @internal_results = Client.new(endpoint: self.class.endpoint(nil)).get(params: @internal_options)
+        @internal_results = JSON.parse(Client.new(endpoint: self.class.endpoint(nil)).get(params: @internal_options))
       end
       @internal_results
     end
@@ -75,7 +75,8 @@ module AssayDepot
     # Overridden from Model
     def internal_results
       unless @internal_results
-        @internal_results = Client.new(endpoint: self.class.endpoint(nil)).search(query: search_query, facets: search_facets, params: internal_options)
+        results = Client.new(endpoint: self.class.endpoint(nil)).search(query: search_query, facets: search_facets, params: internal_options)
+        @internal_results = JSON.parse(results)
       end
       @internal_results
     end
@@ -97,27 +98,37 @@ module AssayDepot
       # optional "id" followed by optional hash
       def get(id: nil, params: {}, format: "json")
         puts "GET id #{id}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).get(params: params)
+        result = Client.new(endpoint: endpoint(id, format)).get(params: params)
+        return JSON.parse(result) if format == "json"
+        result
       end
 
       def put(id: nil, body: nil, params: {}, format: "json")
         puts "PUT id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).put( body: body, params: params )
+        result = Client.new(endpoint: endpoint(id, format)).put( body: body, params: params )
+        return JSON.parse(result) if format == "json"
+        result
       end
 
       def patch(id: nil, body: nil, params: {}, format: "json")
         puts "PATCH id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).put( body: body, params: params )
+        result = Client.new(endpoint: endpoint(id, format)).put( body: body, params: params )
+        return JSON.parse(result) if format == "json"
+        result
       end
 
       def post(id: nil, body: nil, params: {}, format: "json")
         puts "POST id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).post( body: body, params: params )
+        result = Client.new(endpoint: endpoint(id, format)).post( body: body, params: params )
+        return JSON.parse(result) if format == "json"
+        result
       end
 
       def delete(id: nil, body: nil, params: {}, format: "json")
         puts "DELETE id #{id}, params #{params}" if ENV["DEBUG"] == "true"
-        Client.new(endpoint: endpoint(id, format)).delete(params: params)
+        result = Client.new(endpoint: endpoint(id, format)).delete(params: params)
+        return JSON.parse(result) if format == "json"
+        result
       end
     end
 

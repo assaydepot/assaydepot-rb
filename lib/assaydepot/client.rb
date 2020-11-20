@@ -29,7 +29,7 @@ module AssayDepot
       puts "CLIENT.GET HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
-      JSON.parse(res.body)
+      res.body
     end
 
     def put(body: {}, params: {})
@@ -44,7 +44,7 @@ module AssayDepot
         request.body = body.to_json
       end
       res = http.request(request)
-      JSON.parse(res.body)
+      res.body
     end
 
     def post(body: {}, params: {})
@@ -60,7 +60,7 @@ module AssayDepot
         request.body = body.to_json
       end
       res = http.request(request)
-      JSON.parse(res.body)
+      res.body
     end
 
     def delete(params: {})
@@ -71,10 +71,10 @@ module AssayDepot
       puts "CLIENT.DELETE HOST [#{uri.host}] URI [#{uri.request_uri}]}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
-      JSON.parse(res.body)
+      res.body
     end
 
-    def search(query: query, facets: facets, params: params={})
+    def search(query: nil, facets: {}, params: {})
       params["q"] = query if query != ""
       facets&.map do |name,value|
         params["facets[#{name}][]"] = value
