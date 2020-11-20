@@ -21,7 +21,7 @@ module AssayDepot
       JSON.parse(res.body)
     end
 
-    def get(params={})
+    def get(params: {})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
@@ -32,7 +32,7 @@ module AssayDepot
       JSON.parse(res.body)
     end
 
-    def put(body={}, params={})
+    def put(body: {}, params: {})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
@@ -47,7 +47,7 @@ module AssayDepot
       JSON.parse(res.body)
     end
 
-    def post(body={}, params={})
+    def post(body: {}, params: {})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
@@ -63,7 +63,7 @@ module AssayDepot
       JSON.parse(res.body)
     end
 
-    def delete(params={})
+    def delete(params: {})
       uri = get_uri( params )
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
@@ -74,12 +74,12 @@ module AssayDepot
       JSON.parse(res.body)
     end
 
-    def search(query, facets, params={})
+    def search(query: query, facets: facets, params: params={})
       params["q"] = query if query != ""
       facets&.map do |name,value|
         params["facets[#{name}][]"] = value
       end
-      get(params)
+      get(params: params)
     end
 
     private
