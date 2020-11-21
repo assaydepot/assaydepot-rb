@@ -188,4 +188,37 @@ module AssayDepot
       "purchase_orders"
     end
   end
+
+  class List
+    include ::AssayDepot::DatabaseModel
+
+    def self.create(slug, name)
+      post(body: { slug: slug, name: name })
+    end
+
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "dynamic_lists", format)
+    end
+
+    def self.ref_name
+      "dynamic_lists"
+    end
+  end
+
+  class ListItem
+    include ::AssayDepot::SearchModel
+
+    def self.endpoint(id, format="json")
+      if (id.is_a?(Array) && id.length > 1)
+        url = "/dynamic_lists/#{id[0]}/items/#{id[1]}.#{format}"
+      else
+        url = "/dynamic_lists/#{id.is_a?(Array) ? id[0] : id}/items.#{format}"
+      end
+      url
+    end
+
+    def self.ref_name
+      "items"
+    end
+  end
 end
