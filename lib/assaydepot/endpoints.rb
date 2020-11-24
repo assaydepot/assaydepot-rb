@@ -1,10 +1,10 @@
 module AssayDepot
 
   class Category
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id, "categories")
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "categories", format)
     end
 
     def self.ref_name
@@ -13,34 +13,38 @@ module AssayDepot
   end
 
   class DynamicForm
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id, "dynamic_forms")
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "dynamic_forms", format)
     end
   end
 
   class Info
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(nil, "info")
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(nil, "info", format)
     end
   end
 
   class Organization
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id, "organizations")
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "organizations", format)
     end
   end
 
   class QuoteGroup
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id, "quote_groups")
+    def self.mine
+      get(id: "mine")
+    end
+
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "quote_groups", format)
     end
 
     def self.ref_name
@@ -49,10 +53,10 @@ module AssayDepot
   end
 
   class AddNote
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id)
-      "/quote_groups/#{id}/add_note"
+    def self.endpoint(id, format="json")
+      "/quote_groups/#{id}/add_note.#{format}"
     end
 
     def self.ref_name
@@ -61,10 +65,10 @@ module AssayDepot
   end
 
   class QuotedWare
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id, "quoted_wares")
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "quoted_wares", format)
     end
 
     def self.ref_name
@@ -73,10 +77,10 @@ module AssayDepot
   end
 
   class Provider
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint( id, "providers" )
+    def self.endpoint(id=nil, format="json")
+      get_endpoint( id, "providers", format)
     end
 
     def self.search_type
@@ -89,10 +93,10 @@ module AssayDepot
   end
 
   class ProviderWare
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id)
-      "/providers/#{id.is_a?(Array) ? id[0] : id}/wares.json"
+    def self.endpoint(id, format="json")
+      "/providers/#{id.is_a?(Array) ? id[0] : id}/wares.#{format}"
     end
 
     def self.ref_name
@@ -101,10 +105,14 @@ module AssayDepot
   end
 
   class User
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id == nil || id[0] == nil ? nil : 'profile', "users")
+    def self.profile
+      get(id: "profile")
+    end
+
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id == nil || id[0] == nil ? nil : 'profile', "users", format)
     end
 
     def self.ref_name
@@ -113,10 +121,10 @@ module AssayDepot
   end
 
   class Ware
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint( id, "wares" )
+    def self.endpoint(id=nil, format="json")
+      get_endpoint( id, "wares", format)
     end
 
     def self.search_type
@@ -129,13 +137,13 @@ module AssayDepot
   end
 
   class WareProvider
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id)
+    def self.endpoint(id, format="json")
       if (id.is_a?(Array) && id.length > 1)
-        url = "/wares/#{id[0]}/providers/#{id[1]}.json"
+        url = "/wares/#{id[0]}/providers/#{id[1]}.#{format}"
       else
-        url = "/wares/#{id.is_a?(Array) ? id[0] : id}/providers.json"
+        url = "/wares/#{id.is_a?(Array) ? id[0] : id}/providers.#{format}"
       end
       url
     end
@@ -146,10 +154,10 @@ module AssayDepot
   end
 
   class Webhook
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(id=nil)
-      get_endpoint(id, "webhook_config")
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "webhook_config", format)
     end
 
     def self.ref_name
@@ -158,14 +166,59 @@ module AssayDepot
   end
 
   class TokenAuth
-    include ::AssayDepot::Model
+    include ::AssayDepot::SearchModel
 
-    def self.endpoint(site="")
+    def self.endpoint(site="", format=nil)
       "#{site}/oauth/token?grant_type=client_credentials"
     end
 
     def self.ref_name
       "access_token"
+    end
+  end
+
+  class PurchaseOrder
+    include ::AssayDepot::DatabaseModel
+
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "purchase_orders", format)
+    end
+
+    def self.ref_name
+      "purchase_orders"
+    end
+  end
+
+  class List
+    include ::AssayDepot::DatabaseModel
+
+    def self.create(slug, name)
+      post(body: { slug: slug, name: name })
+    end
+
+    def self.endpoint(id=nil, format="json")
+      get_endpoint(id, "dynamic_lists", format)
+    end
+
+    def self.ref_name
+      "dynamic_lists"
+    end
+  end
+
+  class ListItem
+    include ::AssayDepot::SearchModel
+
+    def self.endpoint(id, format="json")
+      if (id.is_a?(Array) && id.length > 1)
+        url = "/dynamic_lists/#{id[0]}/items/#{id[1]}.#{format}"
+      else
+        url = "/dynamic_lists/#{id.is_a?(Array) ? id[0] : id}/items.#{format}"
+      end
+      url
+    end
+
+    def self.ref_name
+      "items"
     end
   end
 end

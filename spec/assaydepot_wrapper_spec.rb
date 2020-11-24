@@ -26,7 +26,7 @@ describe AssayDepot do
       end
 
       it "get specific category" do
-        category = AssayDepot::Category.get(categories[AssayDepot::Category.ref_name].first[:id])
+        category = AssayDepot::Category.get(id: categories[AssayDepot::Category.ref_name].first[:id])
         categories[AssayDepot::Category.ref_name][0][:id].should == category[:id]
       end
     end
@@ -39,7 +39,7 @@ describe AssayDepot do
       end
 
       it "get specific organization" do
-        organization = AssayDepot::Organization.get(organizations.first["id"])
+        organization = AssayDepot::Organization.get(id: organizations.first["id"])
         organizations.first["id"].should == organization["id"]
       end
     end
@@ -53,28 +53,28 @@ describe AssayDepot do
 
       it "get specific provider" do
         id = providers[AssayDepot::Provider.ref_name].first["id"]
-        provider = AssayDepot::Provider.get(id)
+        provider = AssayDepot::Provider.get(id: id)
         id.is_a?(Integer).should == true
         id.should == provider["provider"]["id"]
       end
 
       it "get wares for a specific provider" do
         id = providers[AssayDepot::Provider.ref_name].first["id"]
-        ware = AssayDepot::ProviderWare.get(id)
+        ware = AssayDepot::ProviderWare.get(id: id)
         ware[AssayDepot::ProviderWare.ref_name].is_a?(Array).should == true
       end
 
       it "update specific provider attribute" do
         id = providers[AssayDepot::Provider.ref_name].first["id"]
         num_employees = rand(1000)
-        response = AssayDepot::Provider.put(id, {number_of_employees: num_employees});
+        response = AssayDepot::Provider.put(id: id, body: { number_of_employees: num_employees });
         response["code"].should == "forbidden"
       end
 
     end
 
     context "quote groups" do
-      let(:qg) { AssayDepot::QuoteGroup.get('mine')}
+      let(:qg) { AssayDepot::QuoteGroup.mine }
 
       it "quote groups mine" do
         qg[AssayDepot::QuoteGroup.ref_name].is_a?(Array).should == true
@@ -82,7 +82,7 @@ describe AssayDepot do
 
       it "quote groups specific id" do
         id = qg[AssayDepot::QuoteGroup.ref_name].first["id"]
-        response = AssayDepot::QuoteGroup.get( id )
+        response = AssayDepot::QuoteGroup.get( id: id )
         response["id"].should == id
       end
 
@@ -90,7 +90,7 @@ describe AssayDepot do
         id = qg[AssayDepot::QuoteGroup.ref_name].first["id"]
         title_text = "This is some #{rand(1000)} text."
         body_text = "This is some #{rand(1000)} body text."
-        response = AssayDepot::AddNote.post(id, {
+        response = AssayDepot::AddNote.post(id: id, body: {
           note: {
             title: title_text,
             body: body_text
@@ -102,7 +102,7 @@ describe AssayDepot do
 
     context "users" do
       let(:users) { AssayDepot::User.get() }
-      let(:profile) { AssayDepot::User.get('profile') }
+      let(:profile) { AssayDepot::User.profile }
 
       it "get all users" do
         users[AssayDepot::User.ref_name].is_a?(Array).should == true
@@ -121,12 +121,12 @@ describe AssayDepot do
       end
 
       it "get specific ware" do
-        ware = AssayDepot::Ware.get( wares[AssayDepot::Ware.ref_name].first["id"] )
+        ware = AssayDepot::Ware.get( id: wares[AssayDepot::Ware.ref_name].first["id"] )
         wares[AssayDepot::Ware.ref_name].first["id"].should == ware["ware"]["id"]
       end
 
       it "get providers for a ware id" do
-        response = AssayDepot::WareProvider.get( wares[AssayDepot::Ware.ref_name].first["id"] )
+        response = AssayDepot::WareProvider.get( id: wares[AssayDepot::Ware.ref_name].first["id"] )
         response[AssayDepot::WareProvider.ref_name].is_a?(Array).should == true
       end
     end
@@ -140,15 +140,15 @@ describe AssayDepot do
         @provider_id = providers[AssayDepot::Provider.ref_name].first["id"]
         @provider_name = providers[AssayDepot::Provider.ref_name].first["name"]
         sleep(1)
-        @delete = AssayDepot::WareProvider.delete( @ware_id, @provider_id )
-        @ware_provider_response = AssayDepot::WareProvider.post( @ware_id, @provider_id )
+        @delete = AssayDepot::WareProvider.delete( id: [@ware_id, @provider_id] )
+        @ware_provider_response = AssayDepot::WareProvider.post( id: [@ware_id, @provider_id] )
         # TODO: this should not be needed
         sleep(2)
-        @ware_provider = AssayDepot::WareProvider.get( @ware_id )
-        @provider_ware = AssayDepot::ProviderWare.get( @provider_id )
-        @clean_up = AssayDepot::WareProvider.delete( @ware_id, @provider_id )
-        @provider_clean_up = AssayDepot::WareProvider.get( @ware_id )
-        @ware_clean_up = AssayDepot::ProviderWare.get( @provider_id )
+        @ware_provider = AssayDepot::WareProvider.get( id: @ware_id )
+        @provider_ware = AssayDepot::ProviderWare.get( id: @provider_id )
+        @clean_up = AssayDepot::WareProvider.delete( id: [@ware_id, @provider_id] )
+        @provider_clean_up = AssayDepot::WareProvider.get( id: @ware_id )
+        @ware_clean_up = AssayDepot::ProviderWare.get( id: @provider_id )
       end
 
       it "make sure provider is not published" do
@@ -198,7 +198,7 @@ describe AssayDepot do
 
     context "webhooks" do
       it "create a web hook for this user" do
-        response = AssayDepot::Webhook.put({
+        response = AssayDepot::Webhook.put(body: {
           name: "This is another new 'name'.",
           bogus_key: "ignore_me"
         })
@@ -208,7 +208,7 @@ describe AssayDepot do
       end
 
       it "create a web hook for this user (patch) and verify (get)" do
-        response = AssayDepot::Webhook.patch({
+        response = AssayDepot::Webhook.patch(body: {
           name: "And another new 'name'.",
           bogus_key: "ignore_me"
         })
