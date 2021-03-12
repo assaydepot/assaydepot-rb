@@ -10,12 +10,14 @@ module AssayDepot
       @endpoint = options[:endpoint]
     end
 
-    def request(url, params={}, headers={}, auth={})
-      uri = URI( "#{url}" )
+    def request(url = nil, params={}, headers={}, auth={})
+      uri = url.nil? ? get_uri(params) : URI( "#{url}" )
+      puts "CLIENT.REQUEST HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
       uri.query = Rack::Utils.build_nested_query(params) unless params.keys.length == 0
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
+      request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token] || auth[:username]
       request.basic_auth auth[:username], auth[:password] unless auth[:username].nil?
       res = http.request(request)
       JSON.parse(res.body)
