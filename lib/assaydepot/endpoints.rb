@@ -67,6 +67,18 @@ module AssayDepot
   class QuotedWare
     include ::AssayDepot::SearchModel
 
+    def self.proposals(id, format="json")
+      get(id: "#{id[:id]}/proposals", format: format)
+    end
+
+    def self.purchase_orders(id, format="json")
+      get(id: "#{id[:id]}/purchase_orders", format: format)
+    end
+
+    def self.messages(id, format="json")
+      get(id: "#{id[:id]}/messages", format: format)
+    end
+
     def self.endpoint(id=nil, format="json")
       get_endpoint(id, "quoted_wares", format)
     end
