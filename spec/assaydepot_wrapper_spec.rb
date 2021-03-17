@@ -1,4 +1,5 @@
 require 'assaydepot'
+require 'logger'
 require 'dotenv'
 Dotenv.load
 

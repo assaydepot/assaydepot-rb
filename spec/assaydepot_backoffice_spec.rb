@@ -1,4 +1,5 @@
 require 'assaydepot'
+require 'logger'
 require 'dotenv'
 Dotenv.load
 
@@ -9,6 +10,7 @@ describe AssayDepot do
         config.access_token = ENV['BACKOFFICE_ACCESS_TOKEN']
         config.url = "#{ENV['BACKOFFICE_SITE']}/api/v2"
       end
+      AssayDepot.logger.level = Logger::ERROR
     end
 
     context "configuration" do
