@@ -11,6 +11,21 @@ describe AssayDepot do
       end
     end
 
+    context "configuration" do
+      it "default logger" do
+        AssayDepot.logger.class == Logger
+      end
+
+      it "custom logger" do
+        logger = AssayDepot.logger
+        AssayDepot.configure do |config|
+          config.logger = "my custom logger"
+        end
+        AssayDepot.logger == 'my custom logger'
+        AssayDepot.logger = logger
+      end
+    end
+
     context "info" do
       let(:info) { AssayDepot::Info.get() }
 
