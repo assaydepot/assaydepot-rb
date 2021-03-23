@@ -97,35 +97,35 @@ module AssayDepot
       # HTTP request verbs
       # optional "id" followed by optional hash
       def get(id: nil, params: {}, format: "json")
-        puts "GET id #{id}, params #{params}" if ENV["DEBUG"] == "true"
+        AssayDepot.logger.debug "GET id #{id}, params #{params}"
         result = Client.new(endpoint: endpoint(id, format)).get(params: params)
         return JSON.parse(result) if format == "json"
         result
       end
 
       def put(id: nil, body: nil, params: {}, format: "json")
-        puts "PUT id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
+        AssayDepot.logger.debug "PUT id #{id}, body #{body.to_s}, params #{params}"
         result = Client.new(endpoint: endpoint(id, format)).put( body: body, params: params )
         return JSON.parse(result) if format == "json"
         result
       end
 
       def patch(id: nil, body: nil, params: {}, format: "json")
-        puts "PATCH id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
+        AssayDepot.logger.debug "PATCH id #{id}, body #{body.to_s}, params #{params}"
         result = Client.new(endpoint: endpoint(id, format)).put( body: body, params: params )
         return JSON.parse(result) if format == "json"
         result
       end
 
       def post(id: nil, body: nil, params: {}, format: "json")
-        puts "POST id #{id}, body #{body.to_s}, params #{params}" if ENV["DEBUG"] == "true"
+        AssayDepot.logger.debug "POST id #{id}, body #{body.to_s}, params #{params}"
         result = Client.new(endpoint: endpoint(id, format)).post( body: body, params: params )
         return JSON.parse(result) if format == "json"
         result
       end
 
       def delete(id: nil, body: nil, params: {}, format: "json")
-        puts "DELETE id #{id}, params #{params}" if ENV["DEBUG"] == "true"
+        AssayDepot.logger.debug "DELETE id #{id}, params #{params}"
         result = Client.new(endpoint: endpoint(id, format)).delete(params: params)
         return JSON.parse(result) if format == "json"
         result

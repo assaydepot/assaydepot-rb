@@ -12,7 +12,7 @@ module AssayDepot
 
     def request(url = nil, params={}, headers={}, auth={})
       uri = url.nil? ? get_uri(params) : URI( "#{url}" )
-      puts "CLIENT.REQUEST HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
+      AssayDepot.logger.debug "CLIENT.REQUEST HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]"
       uri.query = Rack::Utils.build_nested_query(params) unless params.keys.length == 0
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
@@ -28,7 +28,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
-      puts "CLIENT.GET HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
+      AssayDepot.logger.debug "CLIENT.GET HOST [#{uri.host}] URI [#{uri.request_uri}] PARAMS [#{params.inspect}]"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
       res.body
@@ -39,7 +39,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Put.new(uri.request_uri)
-      puts "CLIENT.PUT HOST [#{uri.host}] URI [#{uri.request_uri}] BODY [#{body.inspect}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
+      AssayDepot.logger.debug "CLIENT.PUT HOST [#{uri.host}] URI [#{uri.request_uri}] BODY [#{body.inspect}] PARAMS [#{params.inspect}]"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       request["Content-Type"] = "application/json"
       if (body.keys.length > 0)
@@ -54,7 +54,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Post.new(uri.request_uri)
-      puts "CLIENT.POST HOST [#{uri.host}] URI [#{uri.request_uri}] BODY [#{body.inspect}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
+      AssayDepot.logger.debug "CLIENT.POST HOST [#{uri.host}] URI [#{uri.request_uri}] BODY [#{body.inspect}] PARAMS [#{params.inspect}]"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       request["Accept"] = "application/json"
       request["Content-Type"] = "application/json"
@@ -70,7 +70,7 @@ module AssayDepot
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme === 'https'
       request = Net::HTTP::Delete.new(uri.request_uri)
-      puts "CLIENT.DELETE HOST [#{uri.host}] URI [#{uri.request_uri}]}] PARAMS [#{params.inspect}]" if ENV["DEBUG"] == "true"
+      AssayDepot.logger.debug "CLIENT.DELETE HOST [#{uri.host}] URI [#{uri.request_uri}]}] PARAMS [#{params.inspect}]"
       request["Authorization"] = "Bearer #{AssayDepot.access_token}" unless params[:access_token]
       res = http.request(request)
       res.body
